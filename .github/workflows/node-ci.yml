@@ -1,0 +1,18 @@
+name: Node CI
+
+on:
+  workflow_call:
+
+jobs:
+  audit:
+    uses: ./.github/workflows/node-audit.yml
+  codeql:
+    uses: ./.github/workflows/ts-codeql.yml
+  lint:
+    uses: ./.github/workflows/node-lint.yml
+  unit-tests:
+    needs: [audit, lint]
+    uses: ./.github/workflows/node-test-unit.yml
+  e2e-tests:
+    needs: unit-tests
+    uses: ./.github/workflows/node-test-e2e.yml

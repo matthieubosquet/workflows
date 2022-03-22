@@ -1,10 +1,10 @@
-name: Node lint
+name: Node E2E Tests
 
 on:
   workflow_call:
 
 jobs:
-  lint:
+  e2e:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -13,4 +13,4 @@ jobs:
           node-version: "16"
           cache: "npm"
       - run: npm ci --ignore-scripts
-      - run: npm run lint:ci
+      - run: npm run test:e2e
