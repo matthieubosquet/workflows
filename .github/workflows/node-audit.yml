@@ -1,4 +1,4 @@
-name: Audit npm package
+name: Node audit
 
 on:
   workflow_call:

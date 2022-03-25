@@ -1,10 +1,10 @@
-name: Node E2E Tests
+name: Node test E2E
 
 on:
   workflow_call:
 
 jobs:
-  e2e:
+  test-e2e:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

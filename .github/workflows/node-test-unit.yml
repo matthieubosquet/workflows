@@ -1,10 +1,10 @@
-name: Node Unit Tests
+name: Node test unit
 
 on:
   workflow_call:
 
 jobs:
-  test:
+  test-unit:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
