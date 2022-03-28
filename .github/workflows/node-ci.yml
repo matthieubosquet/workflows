@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  analyze:
+  code-analysis:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
