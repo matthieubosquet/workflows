@@ -10,11 +10,11 @@ jobs:
       security-events: write
     strategy:
       fail-fast: false
+      matrix:
+        language: ['javascript', 'typescript']
     steps:
       - uses: actions/checkout@v3
       - uses: github/codeql-action/init@v2
-        with:
-          languages: javascript
       - uses: github/codeql-action/analyze@v2
   audit:
     runs-on: ubuntu-latest
