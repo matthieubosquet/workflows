@@ -9,18 +9,22 @@ on:
 
 jobs:
   test-unit:
-    if: ${{ matrix.node-version >= inputs.node }}
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
         node-version: [14, 16, 18]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
+        if: ${{ matrix.node-version >= inputs.node }}
       - uses: actions/setup-node@v3
+        if: ${{ matrix.node-version >= inputs.node }}
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci --ignore-scripts
+        if: ${{ matrix.node-version >= inputs.node }}
       - run: npm run build
+        if: ${{ matrix.node-version >= inputs.node }}
       - run: npm run test:unit
+        if: ${{ matrix.node-version >= inputs.node }}
