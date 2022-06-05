@@ -2,14 +2,19 @@ name: Node test unit
 
 on:
   workflow_call:
+    inputs:
+      node:
+        required: true
+        type: number
 
 jobs:
   test-unit:
+    if: matrix.node-version >= inputs.node
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        node-version: ["14", "16", "18"]
+        node-version: [14, 16, 18]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
