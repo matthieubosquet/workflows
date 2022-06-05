@@ -4,8 +4,9 @@ on:
   workflow_call:
     inputs:
       node:
-        description: 'Node version (lowest LTS supported)'
+        description: Lowest LTS version supported
         required: false
+        type: number
         default: 14
 
 jobs:
@@ -22,7 +23,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: npm
       - if: matrix.node-version >= inputs.node
         run: npm ci --ignore-scripts
       - if: matrix.node-version >= inputs.node
