@@ -14,13 +14,17 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
         node-version: [14, 16, 18]
     runs-on: ${{ matrix.os }}
-    if: ${{ matrix.node-version >= inputs.node }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - if: matrix.node-version >= inputs.node
+        uses: actions/checkout@v3
+      - if: matrix.node-version >= inputs.node
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: npm ci --ignore-scripts
-      - run: npm run build
-      - run: npm run test:unit
+      - if: matrix.node-version >= inputs.node
+        run: npm ci --ignore-scripts
+      - if: matrix.node-version >= inputs.node
+        run: npm run build
+      - if: matrix.node-version >= inputs.node
+        run: npm run test:unit
