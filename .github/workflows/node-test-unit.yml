@@ -9,7 +9,7 @@ on:
 
 jobs:
   test-unit:
-    if: matrix.node-version >= inputs.node
+    if: ${{ matrix.node-version >= inputs.node }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
