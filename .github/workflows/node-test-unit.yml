@@ -3,7 +3,7 @@ name: Node test unit
 on:
   workflow_call:
     inputs:
-      node:
+      node-support:
         description: Lowest LTS version supported
         required: false
         type: number
@@ -17,16 +17,16 @@ jobs:
         node-version: [14, 16, 18]
     runs-on: ${{ matrix.os }}
     steps:
-      - if: matrix.node-version >= inputs.node
+      - if: matrix.node-version >= inputs.node-support
         uses: actions/checkout@v3
-      - if: matrix.node-version >= inputs.node
+      - if: matrix.node-version >= inputs.node-support
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-      - if: matrix.node-version >= inputs.node
+      - if: matrix.node-version >= inputs.node-support
         run: npm ci --ignore-scripts
-      - if: matrix.node-version >= inputs.node
+      - if: matrix.node-version >= inputs.node-support
         run: npm run build
-      - if: matrix.node-version >= inputs.node
+      - if: matrix.node-version >= inputs.node-support
         run: npm run test:unit
