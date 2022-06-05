@@ -2,6 +2,12 @@ name: Node CI
 
 on:
   workflow_call:
+    inputs:
+      node-support:
+        description: Lowest LTS version supported
+        required: false
+        type: number
+        default: 14
 
 jobs:
   code-analysis:
@@ -40,16 +46,21 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        node-version: ["14", "16", "18"]
+        node-version: [14, 16, 18]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - if: matrix.node-version >= inputs.node-support
+        uses: actions/checkout@v3
+      - if: matrix.node-version >= inputs.node-support
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm ci --ignore-scripts
-      - run: npm run build
-      - run: npm run test:unit
+          cache: npm
+      - if: matrix.node-version >= inputs.node-support
+        run: npm ci --ignore-scripts
+      - if: matrix.node-version >= inputs.node-support
+        run: npm run build
+      - if: matrix.node-version >= inputs.node-support
+        run: npm run test:unit
   test-e2e:
     needs: test-unit
     runs-on: ubuntu-latest
