@@ -4,27 +4,24 @@ on:
   workflow_call:
     inputs:
       node:
+        description: 'Node version (lowest LTS supported)'
         required: true
         type: number
+        default: [14, 16, 18]
 
 jobs:
   test-unit:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        node-version: [14, 16, 18]
+        node-version: ${{ inputs.node }}
     runs-on: ${{ matrix.os }}
     steps:
-      - if: matrix.node-version >= inputs.node
-        uses: actions/checkout@v3
-      - if: matrix.node-version >= inputs.node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - if: matrix.node-version >= inputs.node
-        run: npm ci --ignore-scripts
-      - if: matrix.node-version >= inputs.node
-        run: npm run build
-      - if: matrix.node-version >= inputs.node
-        run: npm run test:unit
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm run test:unit
